@@ -22,30 +22,21 @@ exports.createUser = function(req, res) {
     res.json(msg);
   });
 };
-
-exports.getUser = function(req, res) {
-  var query = (req.params.username) ? {
-    username: req.params.username
-  } : {};
-  User.find(query, function(err, data) {
-    if (err)
-      res.json(err);
-      console.log(err);
-    res.json(data);
-    console.log(data);
+exports.getUsers = function(req, res){
+  User.find(function(err, data){
+    if(err)
+      res.send(err);
+    res.send(data);
   });
 };
-//
-// exports.follow = function(req, res){
-//   User.find({username: req.params.username}, function(err, data){
-//     if(err)
-//       res.json(err);
-//     User.follow(data, function(){
-//       console.log('It worked');
-//     });
-//   });
-//
-// };
+
+exports.getUser = function(req, res) {
+  var user = User.findById(req.params.user_id);
+  user.populate('posts', function(err, post) {
+    res.json(post);
+  });
+
+};
 //TODO: Add deleting
 //TODO: Handle Authentication
 //TODO: Handle Following Users

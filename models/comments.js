@@ -5,10 +5,14 @@ var CommentSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  likes: [{
+  post: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }],
+  },
+  likes: {
+    type: Number,
+    default: 0
+  },
   created_by: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -20,5 +24,15 @@ var CommentSchema = new mongoose.Schema({
     required: true
   }
 });
+
+CommentSchema.methods.like = function(comment){
+  this.likes+=1;
+  this.save(comment);
+};
+
+CommentSchema.methods.dislike = function(comment){
+  this.likes-=1;
+  this.save(comment);
+};
 
 module.exports = mongoose.model('Comment', CommentSchema);

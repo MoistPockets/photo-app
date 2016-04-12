@@ -36,10 +36,10 @@ var UserSchema = new mongoose.Schema({
     unique: true
   },
   //Optional Profile Information
-  following: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }],
+  // following: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User'
+  // }],
   posts: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Post'
@@ -52,10 +52,11 @@ var UserSchema = new mongoose.Schema({
     //TODO: Test out required messaged {required: 'Username required'}
 });
 
-UserSchema.methods.follow = function(user){
-  this.following.push(user[0]._id);
-  console.log('Succesfully followed ' + user[0].username);
-};
+// UserSchema.methods.follow = function(user){
+//   //TODO: Use .findOne() to avoid having to handle array values
+//   this.following.push(user[0]._id);
+//   console.log('Succesfully followed ' + user[0].username);
+// };
 
 
 module.exports = mongoose.model('User', UserSchema);

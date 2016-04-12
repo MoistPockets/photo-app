@@ -8,14 +8,14 @@ var PostSchema = new mongoose.Schema({
   images: [{
     type: String
   }],
-  likes: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }],
-  comments: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Comment'
-  }],
+  // likes: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User'
+  // }],
+  // comments: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Comment'
+  // }],
   created_at: {
     type: Date,
     default: Date.now()
@@ -26,5 +26,14 @@ var PostSchema = new mongoose.Schema({
   },
 });
 
+PostSchema.methods.upvote = function(post) {
+  this.upvotes += 1;
+  this.save(post);
+};
+
+PostSchema.methods.downvote = function (post) {
+  this.upvotes -= 1;
+  this.save(post);
+};
 
 module.exports = mongoose.model('Post', PostSchema);

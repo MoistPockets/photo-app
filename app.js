@@ -25,9 +25,16 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 
 
 //Routing
-router.route('/user/:username?')
-  .get(userController.getUser)
+router.route('/users')
+  .get(userController.getUsers)
   .post(userController.createUser);
+router.route('/user/:user_id')
+  .get(userController.getUser);
+router.route('/post/:post_id?')
+  .get(postController.get)
+  .post(postController.save);
+router.route('post/:post_id/comments')
+  .post(commentController.comment);
 // router.route('/user/follow/:username')
 //   .get(userController.follow);
 app.use('/api', router);
